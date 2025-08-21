@@ -65,28 +65,30 @@ body {
     margin-bottom: 0.5rem;
     font-weight: 600;
     color: #2ecc71;
+    text-shadow: 0 0 5px rgba(46, 204, 113, 0.3);
 }
 
 #difficulty {
     padding: 0.7rem 0.9rem;
     font-size: 1rem;
-    border: 2px solid #1a3d1a;
+    border: 2px solid #2ecc71;
     border-radius: 10px;
     width: 100%;
     max-width: 200px;
     background: #000300;
-    color: #ecf0f1;
+    color: #2ecc71;
+    font-weight: 600;
     transition: all 0.2s ease;
+    box-shadow: 0 0 10px rgba(46, 204, 113, 0.2);
 }
 
 #difficulty:hover {
-    border-color: #2ecc71;
+    box-shadow: 0 0 15px rgba(46, 204, 113, 0.4);
 }
 
 #difficulty:focus {
     outline: none;
-    border-color: #2ecc71;
-    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
+    box-shadow: 0 0 20px rgba(46, 204, 113, 0.6);
 }
 
 .game-area {

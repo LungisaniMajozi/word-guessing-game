@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
     hiddenInput.style.fontSize = '1px';
     document.body.appendChild(hiddenInput);
 
-    // Focus input on tap/click (mobile)
+    // Focus input on tap/click
     document.querySelector('.container').addEventListener('touchstart', (e) => {
         if (!levelUpModal.classList.contains('show') && !gameOverModal.classList.contains('show')) {
             hiddenInput.focus();
@@ -41,13 +41,16 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.querySelector('.container').addEventListener('click', (e) => {
-        const container = document.querySelector('.container');
-        if (e.target === container || container.contains(e.target)) {
-            if (!levelUpModal.classList.contains('show') && !gameOverModal.classList.contains('show')) {
-                hiddenInput.focus();
-            }
-        }
-    });
+    // If user taps the dropdown, DO NOT focus hidden input
+    if (e.target.id === 'difficulty' || e.target.closest('#difficulty')) {
+        return; // Let dropdown work normally
+    }
+
+    // Only focus hidden input if clicking elsewhere in the game
+    if (!levelUpModal.classList.contains('show') && !gameOverModal.classList.contains('show')) {
+        hiddenInput.focus();
+    }
+});
 
     // Game state
     let selectedDifficulty = 'easy';
@@ -59,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let gameScore = 0;
     let currentCategory = '';
 
-    // Word lists
+    // Word lists by difficulty
     const wordsByDifficulty = {
         easy: {
             animals: ['cat', 'dog', 'lion', 'frog'],
@@ -81,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
-    // Complete hints
+    // Complete hints for all words
     const hints = {
         'cat': 'A common pet that says "meow"',
         'dog': 'Man\'s best friend',
@@ -142,6 +145,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         selectedDifficulty = difficultySelect.value;
 
+        // Show feedback when difficulty changes
+        showMessage(`Difficulty: ${selectedDifficulty.toUpperCase()}`, 'warning');
+
         const categories = Object.keys(wordsByDifficulty[selectedDifficulty]);
         currentCategory = categories[Math.floor(Math.random() * categories.length)];
         categoryName.textContent = currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1);
@@ -151,9 +157,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         revealStartingLetters();
         displayWord();
-        showMessage('', '');
     }
 
+    // Reveal vowels + 1–2 consonants based on difficulty
     function revealStartingLetters() {
         correctLetters = [];
         const uniqueLetters = [...new Set(currentWord.split(''))];
@@ -172,6 +178,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Shuffle array
     function shuffleArray(array) {
         const arr = [...array];
         for (let i = arr.length - 1; i > 0; i--) {
@@ -181,6 +188,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return arr;
     }
 
+    // Display word with boxes
     function displayWord() {
         wordDisplay.innerHTML = '';
         currentWord.split('').forEach(letter => {
@@ -196,6 +204,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Handle key press
     function handleKeyPress(key) {
         if (!/^[a-zA-Z]$/.test(key) || key.length !== 1) return;
 
@@ -232,10 +241,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Check if all letters are guessed
     function checkWin() {
         return [...new Set(currentWord.split(''))].every(l => correctLetters.includes(l));
     }
 
+    // End game
     function endGame(victory) {
         if (!victory) {
             correctLetters = [...new Set(currentWord.split(''))];
@@ -246,13 +257,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Smart message: shows on top (mobile) or center (desktop)
+    // Show message (smart: top on mobile, center on desktop)
     function showMessage(text, type) {
-        // Mobile toast (top of screen)
         mobileToast.textContent = text;
         mobileToast.className = `mobile-toast ${type} show`;
 
-        // Desktop message (center)
         if (window.innerWidth >= 768) {
             message.textContent = text;
             message.className = `message ${type} show`;
@@ -261,7 +270,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 4000);
         }
 
-        // Auto-hide mobile toast
         setTimeout(() => {
             mobileToast.classList.remove('show');
         }, 4000);
@@ -280,8 +288,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     difficultySelect.addEventListener('change', () => {
-        selectedDifficulty = difficultySelect.value;
-    });
+    selectedDifficulty = difficultySelect.value;
+    showMessage(`🔄 Difficulty set to ${selectedDifficulty.toUpperCase()}`, 'warning');
+    initGame();
+   });
 
     newGameBtn.addEventListener('click', () => {
         gameLevel = 1;
@@ -323,6 +333,8 @@ document.addEventListener('DOMContentLoaded', function () {
             if (e.target === modal) modal.classList.remove('show');
         });
     });
+	
+	console.log("Starting game:", { selectedDifficulty, currentCategory });
 
     // Start game
     initGame();
