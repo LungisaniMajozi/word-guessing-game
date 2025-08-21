@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const categoryName = document.getElementById('categoryName');
     const livesCount = document.getElementById('livesCount');
     const message = document.getElementById('message');
+    const mobileToast = document.getElementById('mobileToast');
     const currentLevel = document.getElementById('currentLevel');
     const score = document.getElementById('score');
     const difficultySelect = document.getElementById('difficulty');
@@ -32,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
     hiddenInput.style.fontSize = '1px';
     document.body.appendChild(hiddenInput);
 
-    // Focus input on tap (mobile)
+    // Focus input on tap/click (mobile)
     document.querySelector('.container').addEventListener('touchstart', (e) => {
         if (!levelUpModal.classList.contains('show') && !gameOverModal.classList.contains('show')) {
             hiddenInput.focus();
@@ -40,9 +41,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.querySelector('.container').addEventListener('click', (e) => {
-        if (e.target === document.querySelector('.container') ||
-            e.target.classList.contains('game-area') ||
-            e.target.classList.contains('instruction')) {
+        const container = document.querySelector('.container');
+        if (e.target === container || container.contains(e.target)) {
             if (!levelUpModal.classList.contains('show') && !gameOverModal.classList.contains('show')) {
                 hiddenInput.focus();
             }
@@ -246,12 +246,25 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Smart message: shows on top (mobile) or center (desktop)
     function showMessage(text, type) {
-        message.textContent = text;
-        message.className = `message ${type} show`;
+        // Mobile toast (top of screen)
+        mobileToast.textContent = text;
+        mobileToast.className = `mobile-toast ${type} show`;
+
+        // Desktop message (center)
+        if (window.innerWidth >= 768) {
+            message.textContent = text;
+            message.className = `message ${type} show`;
+            setTimeout(() => {
+                message.classList.remove('show');
+            }, 4000);
+        }
+
+        // Auto-hide mobile toast
         setTimeout(() => {
-            message.classList.remove('show');
-        }, 4000); // 4 seconds for better visibility
+            mobileToast.classList.remove('show');
+        }, 4000);
     }
 
     // Event Listeners

@@ -28,6 +28,8 @@ body {
     text-align: center;
     border: 1px solid #1a3d1a;
     backdrop-filter: blur(4px);
+    position: relative;
+    z-index: 10;
 }
 
 .header {
@@ -145,6 +147,7 @@ body {
     opacity: 0.8;
 }
 
+/* Desktop Message (hidden on mobile) */
 .message {
     min-height: 40px;
     margin: 1rem 0;
@@ -183,6 +186,63 @@ body {
     background: rgba(231, 76, 60, 0.2);
     color: #e74c3c;
     border-color: #e74c3c;
+}
+
+/* Mobile Toast (only visible on small screens) */
+.mobile-toast {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateX(-50%) translateY(-10px);
+    max-width: 90%;
+    text-align: center;
+    border: 1px solid #2ecc71;
+}
+
+.mobile-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.mobile-toast.success {
+    background: #27ae60;
+    border-color: #27ae60;
+}
+
+.mobile-toast.warning {
+    background: #e67e22;
+    border-color: #d35400;
+}
+
+.mobile-toast.error {
+    background: #e74c3c;
+    border-color: #c0392b;
+}
+
+/* Hide mobile toast on large devices */
+@media (min-width: 768px) {
+    .mobile-toast {
+        display: none;
+    }
+}
+
+/* Hide regular message on mobile */
+@media (max-width: 767px) {
+    .message {
+        display: none;
+    }
 }
 
 /* Buttons */
