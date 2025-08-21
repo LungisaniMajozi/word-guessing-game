@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Guessing Game</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Word Guessing Game By Majozi</h1>
+            <div class="level-info">
+                <span>Level: <strong id="currentLevel">1</strong></span>
+                <span>Score: <strong id="score">0</strong></span>
+            </div>
+        </div>
+        
+        <div class="difficulty-selector">
+            <h3>Choose Difficulty</h3>
+            <div class="difficulty-buttons">
+                <button class="difficulty-btn active" data-level="easy">Easy</button>
+                <button class="difficulty-btn" data-level="medium">Medium</button>
+                <button class="difficulty-btn" data-level="hard">Hard</button>
+            </div>
+        </div>
+        
+        <div class="game-area">
+            <div class="word-display" id="wordDisplay"></div>
+            
+            <div class="category" id="category">
+                Category: <span id="categoryName">Animals</span>
+            </div>
+            
+            <div class="lives">
+                Lives: <span id="livesCount">5</span>
+                <div class="hearts" id="hearts">
+                    <span class="heart">❤️</span>
+                    <span class="heart">❤️</span>
+                    <span class="heart">❤️</span>
+                    <span class="heart">❤️</span>
+                    <span class="heart">❤️</span>
+                </div>
+            </div>
+            
+            <div class="keyboard" id="keyboard"></div>
+            
+            <div class="message" id="message"></div>
+            
+            <div class="game-controls">
+                <button id="newGameBtn">New Game</button>
+                <button id="hintBtn">Get Hint</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="levelUpModal">
+        <div class="modal-content">
+            <h2>🎉 Level Up! 🎉</h2>
+            <p>You've completed <span id="completedLevel"></span>!</p>
+            <p>Score: <span id="levelScore"></span></p>
+            <button id="nextLevelBtn">Next Level</button>
+        </div>
+    </div>
+
+    <div class="modal" id="gameOverModal">
+        <div class="modal-content">
+            <h2>Game Over</h2>
+            <p>Your final score is: <span id="finalScore"></span></p>
+            <p>The word was: <strong id="revealedWord"></strong></p>
+            <button id="playAgainBtn">Play Again</button>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
