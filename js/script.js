@@ -18,6 +18,37 @@ document.addEventListener('DOMContentLoaded', function () {
     const nextLevelBtn = document.getElementById('nextLevelBtn');
     const playAgainBtn = document.getElementById('playAgainBtn');
 
+    // Hidden input for mobile keyboard
+    const hiddenInput = document.createElement('input');
+    hiddenInput.type = 'text';
+    hiddenInput.autocapitalize = 'none';
+    hiddenInput.autocorrect = 'off';
+    hiddenInput.spellcheck = 'false';
+    hiddenInput.maxLength = '1';
+    hiddenInput.style.position = 'absolute';
+    hiddenInput.style.opacity = '0';
+    hiddenInput.style.height = '0';
+    hiddenInput.style.width = '0';
+    hiddenInput.style.fontSize = '1px';
+    document.body.appendChild(hiddenInput);
+
+    // Focus input on tap (mobile)
+    document.querySelector('.container').addEventListener('touchstart', (e) => {
+        if (!levelUpModal.classList.contains('show') && !gameOverModal.classList.contains('show')) {
+            hiddenInput.focus();
+        }
+    });
+
+    document.querySelector('.container').addEventListener('click', (e) => {
+        if (e.target === document.querySelector('.container') ||
+            e.target.classList.contains('game-area') ||
+            e.target.classList.contains('instruction')) {
+            if (!levelUpModal.classList.contains('show') && !gameOverModal.classList.contains('show')) {
+                hiddenInput.focus();
+            }
+        }
+    });
+
     // Game state
     let selectedDifficulty = 'easy';
     let currentWord = '';
@@ -28,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let gameScore = 0;
     let currentCategory = '';
 
-    // Word lists and hints (same as before, for brevity — kept unchanged)
+    // Word lists
     const wordsByDifficulty = {
         easy: {
             animals: ['cat', 'dog', 'lion', 'frog'],
@@ -50,18 +81,56 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
+    // Complete hints
     const hints = {
-        // Include all your previous hints here — kept same
         'cat': 'A common pet that says "meow"',
         'dog': 'Man\'s best friend',
-        'tiger': 'Striped big cat',
-        'cheetah': 'Fastest land animal',
-        // ... add others as needed
+        'lion': 'King of the jungle',
+        'frog': 'Starts as a tadpole, jumps high',
+        'red': 'Color of fire trucks and hearts',
+        'blue': 'Color of the sky on a clear day',
+        'pink': 'Soft romantic color, like a flower',
+        'gold': 'Shiny precious metal, first prize',
         'apple': 'Keeps the doctor away',
-        'banana': 'Yellow fruit, monkeys love it',
+        'mango': 'Tropical fruit with sweet golden flesh',
+        'cherry': 'Small red fruit with a pit',
+        'grape': 'Grows in bunches, used for wine',
         'japan': 'Island nation in East Asia',
-        'australia': 'Country and continent surrounded by oceans'
-        // Add more as needed
+        'france': 'Famous for the Eiffel Tower',
+        'canada': 'Known for maple syrup and politeness',
+        'peru': 'Home of Machu Picchu',
+        'tiger': 'Striped big cat, orange and black',
+        'giraffe': 'Tallest animal, long neck',
+        'raccoon': 'Washes food, masked bandit',
+        'panda': 'Black and white bear from China',
+        'purple': 'Mix of red and blue, royal color',
+        'emerald': 'Green precious gemstone',
+        'crimson': 'Deep red, like royal robes',
+        'violet': 'Purple flower or color',
+        'banana': 'Yellow fruit, monkeys love it',
+        'kiwi': 'Brown fuzzy fruit with green inside',
+        'coconut': 'Big tropical fruit with water inside',
+        'papaya': 'Orange tropical fruit with black seeds',
+        'germany': 'In central Europe, known for cars',
+        'sweden': 'Home of IKEA and ABBA',
+        'portugal': 'Westernmost country in Europe',
+        'belgium': 'Famous for chocolate and waffles',
+        'cheetah': 'Fastest land animal',
+        'hippopotamus': 'Large river animal, dangerous',
+        'platypus': 'Weird mammal that lays eggs',
+        'chimpanzee': 'Smart primate, close to humans',
+        'aquamarine': 'Blue-green gemstone or ocean color',
+        'fuchsia': 'Bright pink-purple color',
+        'burgundy': 'Dark red wine color',
+        'chartreuse': 'Yellow-green color, rare and bold',
+        'pomegranate': 'Fruit full of red juicy seeds',
+        'dragonfruit': 'Exotic fruit with pink skin and green scales',
+        'persimmon': 'Sweet orange fruit, a bit like apricot',
+        'passionfruit': 'Tart tropical fruit with many seeds',
+        'australia': 'Land of kangaroos and koalas',
+        'madagascar': 'Island with unique lemurs',
+        'luxembourg': 'Small rich country in Europe',
+        'slovenia': 'Beautiful Alpine country near Italy'
     };
 
     // Initialize game
@@ -90,7 +159,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const uniqueLetters = [...new Set(currentWord.split(''))];
         const vowels = ['A', 'E', 'I', 'O', 'U'];
         const wordVowels = uniqueLetters.filter(l => vowels.includes(l));
-
         wordVowels.forEach(v => correctLetters.push(v));
 
         const consonants = uniqueLetters.filter(l => !vowels.includes(l));
@@ -114,18 +182,18 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function displayWord() {
-		wordDisplay.innerHTML = '';
-		currentWord.split('').forEach(letter => {
-			const span = document.createElement('span');
-			span.classList.add('letter-box');
-			if (correctLetters.includes(letter)) {
-				span.textContent = letter;
-				span.classList.add('guessed');
-			} else {
-				span.classList.add('blank');
-			}
-			wordDisplay.appendChild(span);
-		});
+        wordDisplay.innerHTML = '';
+        currentWord.split('').forEach(letter => {
+            const span = document.createElement('span');
+            span.classList.add('letter-box');
+            if (correctLetters.includes(letter)) {
+                span.textContent = letter;
+                span.classList.add('guessed');
+            } else {
+                span.classList.add('blank');
+            }
+            wordDisplay.appendChild(span);
+        });
     }
 
     function handleKeyPress(key) {
@@ -183,10 +251,21 @@ document.addEventListener('DOMContentLoaded', function () {
         message.className = `message ${type} show`;
         setTimeout(() => {
             message.classList.remove('show');
-        }, 3000);
+        }, 4000); // 4 seconds for better visibility
     }
 
     // Event Listeners
+    hiddenInput.addEventListener('input', (e) => {
+        const key = e.data;
+        if (key) handleKeyPress(key);
+        hiddenInput.value = '';
+    });
+
+    window.addEventListener('keydown', (e) => {
+        if (levelUpModal.classList.contains('show') || gameOverModal.classList.contains('show')) return;
+        handleKeyPress(e.key);
+    });
+
     difficultySelect.addEventListener('change', () => {
         selectedDifficulty = difficultySelect.value;
     });
@@ -201,7 +280,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     hintBtn.addEventListener('click', () => {
         const hint = hints[currentWord.toLowerCase()];
-        showMessage(hint ? `Hint: ${hint}` : 'No hint available', 'warning');
+        if (hint) {
+            showMessage(`💡 ${hint}`, 'warning');
+        } else {
+            showMessage('🔍 No hint available', 'error');
+        }
     });
 
     nextLevelBtn.addEventListener('click', () => {
@@ -222,17 +305,10 @@ document.addEventListener('DOMContentLoaded', function () {
         initGame();
     });
 
-    // Close modals when clicking outside
     [levelUpModal, gameOverModal].forEach(modal => {
         modal.addEventListener('click', e => {
             if (e.target === modal) modal.classList.remove('show');
         });
-    });
-
-    // Keyboard input (physical only)
-    window.addEventListener('keydown', (e) => {
-        if (levelUpModal.classList.contains('show') || gameOverModal.classList.contains('show')) return;
-        handleKeyPress(e.key);
     });
 
     // Start game

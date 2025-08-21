@@ -7,8 +7,8 @@
 
 body {
     font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-    background: linear-gradient(135deg, #f4f7fe, #e2e8f5);
-    color: #1a1c20;
+    background: #000300;
+    color: #ecf0f1;
     line-height: 1.6;
     min-height: 100vh;
     display: flex;
@@ -20,13 +20,14 @@ body {
 .container {
     width: 100%;
     max-width: 640px;
-    background: #ffffff;
+    background: #0f1b0f;
     border-radius: 20px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     overflow: hidden;
     padding: 2rem;
     text-align: center;
-    border: 1px solid #e6edf3;
+    border: 1px solid #1a3d1a;
+    backdrop-filter: blur(4px);
 }
 
 .header {
@@ -41,12 +42,13 @@ body {
 .header h1 {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #2d3748;
+    color: #2ecc71;
+    text-shadow: 0 0 8px rgba(46, 204, 113, 0.3);
 }
 
 .stats {
     font-size: 1rem;
-    color: #4a5568;
+    color: #a8e6a3;
     gap: 1.5rem;
     display: flex;
 }
@@ -60,29 +62,29 @@ body {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 600;
-    color: #2d3748;
-    font-size: 0.95rem;
+    color: #2ecc71;
 }
 
 #difficulty {
     padding: 0.7rem 0.9rem;
     font-size: 1rem;
-    border: 2px solid #cbd5e0;
+    border: 2px solid #1a3d1a;
     border-radius: 10px;
     width: 100%;
     max-width: 200px;
-    background: white;
-    transition: border-color 0.2s ease;
+    background: #000300;
+    color: #ecf0f1;
+    transition: all 0.2s ease;
 }
 
 #difficulty:hover {
-    border-color: #4299e1;
+    border-color: #2ecc71;
 }
 
 #difficulty:focus {
     outline: none;
-    border-color: #4299e1;
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+    border-color: #2ecc71;
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
 }
 
 .game-area {
@@ -91,15 +93,15 @@ body {
 
 .info {
     font-size: 1rem;
-    color: #4a5568;
+    color: #a8e6a3;
     margin-bottom: 1.5rem;
 }
 
-/* Word Display with Boxes */
+/* Letter Boxes */
 .word-display {
     display: inline-flex;
-    gap: 0.5rem;
-    margin: 1.8rem 0;
+    gap: 0.6rem;
+    margin: 2rem 0;
     justify-content: center;
     flex-wrap: wrap;
 }
@@ -110,35 +112,37 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #ffffff;
-    border: 2px solid #a0aec0;
+    background: #000300;
+    border: 2px solid #1a3d1a;
     border-radius: 12px;
     font-size: 1.8rem;
     font-weight: bold;
-    color: #1a1c20;
+    color: #ecf0f1;
     text-transform: uppercase;
     transition: all 0.2s ease;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .letter-box.guessed {
-    background: #48bb78;
-    color: white;
-    border-color: #38a169;
-    box-shadow: 0 4px 10px rgba(72, 187, 120, 0.2);
+    background: #1a3d1a;
+    color: #a8e6a3;
+    border-color: #2ecc71;
+    box-shadow: 0 6px 12px rgba(46, 204, 113, 0.2);
+    font-weight: 900;
 }
 
 .letter-box.blank {
-    background: #f7fafc;
-    border: 2px dashed #cbd5e0;
+    background: #000300;
+    border: 2px dashed #1a3d1a;
     color: transparent;
 }
 
 .instruction {
     font-size: 0.95rem;
-    color: #718096;
+    color: #a8e6a3;
     margin-bottom: 1rem;
     font-style: italic;
+    opacity: 0.8;
 }
 
 .message {
@@ -150,6 +154,8 @@ body {
     opacity: 0;
     transition: opacity 0.4s ease;
     font-weight: 500;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid #1a3d1a;
 }
 
 .message.show {
@@ -157,56 +163,61 @@ body {
 }
 
 .message.success {
-    background: #ebf8ff;
-    color: #2b6cb0;
-    border: 1px solid #bee3f8;
+    background: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+    border-color: #2ecc71;
 }
 
 .message.warning {
-    background: #fffbeb;
-    color: #975a16;
-    border: 1px solid #faf089;
+    background: #e67e22;
+    color: white;
+    border: 1px solid #d35400;
+    font-weight: 600;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(230, 126, 34, 0.3);
+    text-align: center;
 }
 
 .message.error {
-    background: #feeaea;
-    color: #c53030;
-    border: 1px solid #feb2b2;
+    background: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+    border-color: #e74c3c;
 }
 
 /* Buttons */
 .controls {
     display: flex;
     justify-content: center;
-    gap: 1rem;
+    gap: 1.2rem;
     margin-top: 1.8rem;
     flex-wrap: wrap;
 }
 
 .controls button {
-    padding: 0.75rem 1.3rem;
+    padding: 0.75rem 1.4rem;
     font-size: 1rem;
     font-weight: 600;
     border: none;
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 #newGameBtn {
-    background: #4299e1;
+    background: #3498db;
     color: white;
 }
 
 #hintBtn {
-    background: #805ad5;
+    background: #e67e22;
     color: white;
 }
 
 button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 }
 
 button:active {
@@ -220,7 +231,7 @@ button:active {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.8);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -236,24 +247,24 @@ button:active {
 }
 
 .modal-content {
-    background: white;
+    background: #0f1b0f;
     padding: 2rem;
     border-radius: 16px;
     max-width: 90%;
     width: 360px;
     text-align: center;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    border: 1px solid #e6edf3;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid #1a3d1a;
 }
 
 .modal h2 {
     margin-bottom: 1rem;
-    color: #1a1c20;
+    color: #2ecc71;
     font-size: 1.6rem;
 }
 
 .modal p {
-    color: #4a5568;
+    color: #a8e6a3;
     margin-bottom: 1.5rem;
     font-size: 1rem;
     line-height: 1.5;
@@ -261,23 +272,23 @@ button:active {
 
 .modal button {
     padding: 0.8rem 1.4rem;
-    background: #2c5282;
-    color: white;
+    background: #2ecc71;
+    color: #000300;
     border: none;
     border-radius: 10px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .modal button:hover {
-    background: #2a4365;
+    background: #a8e6a3;
     transform: translateY(-2px);
 }
 
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 480px) {
     .container {
         padding: 1.5rem;
@@ -294,10 +305,6 @@ button:active {
         font-size: 0.9rem;
     }
 
-    .word-display {
-        gap: 0.4rem;
-    }
-
     .letter-box {
         width: 2.4rem;
         height: 2.4rem;
@@ -312,18 +319,9 @@ button:active {
     .controls button {
         width: 100%;
     }
-
-    .instruction {
-        font-size: 0.9rem;
-    }
 }
 
-/* Tablet */
 @media (min-width: 768px) {
-    .container {
-        padding: 2.5rem;
-    }
-
     .letter-box {
         width: 3.2rem;
         height: 3.2rem;
